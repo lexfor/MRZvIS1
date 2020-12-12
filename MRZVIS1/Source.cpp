@@ -5,7 +5,7 @@
 using namespace cimg_library;
 int main() {
 	neural_network my_Network;
-	CImg<double> image("D:\\mrz.bmp");
+	CImg<double> image("D:\\12.bmp");
 	my_Network.setImg(image);
 	my_Network.showImg();
 	my_Network.setSize();

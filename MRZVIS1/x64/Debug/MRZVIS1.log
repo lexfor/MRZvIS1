@@ -1,0 +1,3 @@
+﻿  neural_network.cpp
+C:\Users\theti\source\repos\MRZVIS1\MRZVIS1\neural_network.cpp(147,30): warning C4244: =: преобразование "unsigned __int64" в "double", возможна потеря данных
+  MRZVIS1.vcxproj -> C:\Users\theti\source\repos\MRZVIS1\x64\Debug\MRZVIS1.exe

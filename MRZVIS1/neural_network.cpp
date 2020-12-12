@@ -1,11 +1,11 @@
+//Автор : Киневич Т.О. группа : 821703
 #include "neural_network.h"
 #include <thread>
 neural_network::neural_network() {
 	Cmax = 255;
 	n = 2;
 	m = 2;
-	a = 0.00001;
-	maxError = 100;
+	a = 0.0000005;
 	Err = 0;
 	p = 3;
 }
@@ -51,35 +51,31 @@ void neural_network::imgToMatrix() {
 
 void neural_network::learn() {
 	int count = 0;
-	int matCount;
 	do {
 		Err = 0;
-		matCount = 0;
 		for (auto i : in) {
-			matCount++;
 			i.toInput();
-			Matrix y, z,u, deltaX, deltaY;
+			Matrix y, z, deltaX, deltaY;
 			y = i * firstWeights;
 			z = y * secondWeights;
-			u = z * firstWeights;
 			deltaX = z - i;
-			deltaY = u - y;
-			//std::thread th1(&neural_network::ChangeFirstWieghts, this, z, deltaY);
-			//std::thread th2(&neural_network::ChangeSecondWeights, this, y, deltaX);
-
-			firstWeights = firstWeights - z.Transposition() * a * deltaY;
-			secondWeights = secondWeights - y.Transposition() * a * deltaX;
-			/*deltaY = u - y;
+			deltaY = deltaX * secondWeights.Transposition();
 			firstWeights = firstWeights - i.Transposition() * a * deltaY;
-			secondWeights = secondWeights - y.Transposition() * a * deltaX;*/
+			secondWeights = secondWeights - y.Transposition() * a * deltaX; //вычеслен (t+1)
+
+		}
+		for (auto i : in) {
+			Matrix y, z, deltaX;
+			i.toInput();
+			y = i * firstWeights;
+			z = y * secondWeights;
+			deltaX = z - i;
 			Err += deltaX.square();
-			//th1.join();
-			//th2.join();
 		}
 		count++;
-		std::cout<<"Error : "<< Err / in.size() << std::endl;
+		std::cout<<"Error : "<< Err << std::endl;
 		std::cout<<"Epoch : "<< count << std::endl;
-	} while (Err / in.size() > 0.05);//(Err / in.size() > 0.3)(count < 10);
+	} while (Err  > 13000);
 }
 
 void neural_network::setMaxErorr(double Err) {

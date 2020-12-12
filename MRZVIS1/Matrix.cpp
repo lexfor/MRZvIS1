@@ -1,3 +1,4 @@
+//автор : Киневич Т.О.
 #include "Matrix.h"
 #include <iostream>
 Matrix::Matrix() : width(0),height(0){
